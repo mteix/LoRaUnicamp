@@ -119,7 +119,7 @@ void loop() {
   }
 
   Radio.IrqProcess();
-  // Serial.println("Cachorro chupa pau!!");
+  
   
   
 }
