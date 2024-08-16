@@ -1,3 +1,5 @@
+#include <DHTesp.h>
+
 /*
    Code to detect heartbeat pulses from the PulseSensor
 
@@ -27,7 +29,7 @@
 */
 
 #include <PulseSensorPlayground.h>
-
+// #define PULSE_INPUT  2
 // 
 /*
    The format of our output.
@@ -39,7 +41,7 @@
    Set this to SERIAL_PLOTTER if you're going to run
     the Arduino IDE's Serial Plotter.
 */
-// const int OUTPUT_TYPE = SERIAL_PLOTTER;
+const int OUTPUT_TYPE = SERIAL_PLOTTER;
 
 /*
    Pinout:
@@ -61,7 +63,9 @@
       waveform. THRESHOLD sets the default when there is no pulse present.
       Adjust as neccesary.
 */
-const int PULSE_INPUT = 2;
+// const int PULSE_INPUT = 2;
+
+const int PULSE_INPUT =  2;
 const int PULSE_BLINK = LED_BUILTIN;
 const int PULSE_FADE = 5;
 const int THRESHOLD = 550;   // Adjust this number to avoid noise when idle
@@ -85,12 +89,12 @@ void setup() {
 
   // Configure the PulseSensor manager.
 
-  pulseSensor.analogInput(PULSE_INPUT);
+  pulseSensor.analogInput(2);
   pulseSensor.blinkOnPulse(PULSE_BLINK);
   pulseSensor.fadeOnPulse(PULSE_FADE);
 
   pulseSensor.setSerial(Serial);
-  // pulseSensor.setOutputType(OUTPUT_TYPE);
+  pulseSensor.setOutputType(OUTPUT_TYPE);
   pulseSensor.setThreshold(THRESHOLD);
 
   // Now that everything is ready, start reading the PulseSensor signal.

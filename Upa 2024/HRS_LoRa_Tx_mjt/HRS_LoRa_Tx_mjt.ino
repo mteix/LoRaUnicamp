@@ -48,7 +48,7 @@
 
 // Volatile Variables, used in the interrupt service routine!
 volatile int BPM;                   // int that holds raw Analog in 0. updated every 2mS
-int Signal;                // holds the incoming raw data
+volatile int Signal;                // holds the incoming raw data
 volatile int IBI = 600;             // int that holds the time interval between beats! Must be seeded! 
 volatile boolean Pulse = false;     // "True" when User's live heartbeat is detected. "False" when not a "live beat". 
 volatile boolean QS = false;        // becomes true when Arduoino finds a beat.
@@ -105,15 +105,15 @@ void setup() {
 
 void loop()
 {
-	
+	Signal = analogRead(HBS);  // Read the PulseSensor's value.
+                                              // Assign this value to the "Signal" variable.
+  delay(500);
   
   if(lora_idle == true) // true original
 	{
   
   
-	 Signal = analogRead(HBS);  // Read the PulseSensor's value.
-                                              // Assign this value to the "Signal" variable.
-  delay(500);
+	 
   Serial.println("CCP  " + String(Signal)); 
 
   	txNumber += 0.01;
