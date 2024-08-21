@@ -25,7 +25,7 @@
 
 #define RF_FREQUENCY                                915000000 // Hz
 
-#define TX_OUTPUT_POWER                             20        // dBm
+#define TX_OUTPUT_POWER                             5        // dBm
 
 #define LORA_BANDWIDTH                              0         // [0: 125 kHz,
                                                               //  1: 250 kHz,

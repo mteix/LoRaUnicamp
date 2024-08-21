@@ -48,6 +48,9 @@
 char txpacket[BUFFER_SIZE];
 char rxpacket[BUFFER_SIZE];
 
+// Counter to display messages
+int cnt = 0;
+
 static RadioEvents_t RadioEvents;
 
 #ifdef WIRELESS_STICK_V3
@@ -111,10 +114,10 @@ void loop() {
     lora_idle = false;
     Serial.println("into RX mode");
     Radio.Rx(0);
-    display.drawString(0, 25, "Waiting for LoRa package...");
-    display.display();
-    delay(500);
-    display.clear();
+    // display.drawString(0, 25, "Waiting for LoRa package...");
+    // display.display();
+    // delay(500);
+    // display.clear();
    
   }
 
@@ -128,6 +131,7 @@ void loop() {
 // ------- need to pass display as an argument here, then call and send to OLED
 
 void OnRxDone(uint8_t *payload, uint16_t size, int16_t rssi, int8_t snr) {
+  
   rssi = rssi;
   rxSize = size;
   memcpy(rxpacket, payload, size);
@@ -141,13 +145,39 @@ void OnRxDone(uint8_t *payload, uint16_t size, int16_t rssi, int8_t snr) {
   display.drawString(40, 20, String(rssi));
   // delay(500);
   // display.clear();
-  display.drawString(0, 30, "SNR = ");
-  display.drawString(40, 30, String(snr));
-  display.drawString(0, 50, rxpacket);
-  // display.drawString(4, 50, payload);
-  display.display();
-  display.clear();
-  delay(1000);
+  // display.drawString(0, 30, "SNR = ");
+  // display.drawString(40, 30, String(snr));
+ 
+// //  display in  two lines 
+  if (cnt==1){
+    display.drawString(0, 50, rxpacket);
+    cnt = 0;
+    display.display();
+    display.clear();
+    // delay(1000);
   lora_idle = true;
+  }
+  else{
+    display.drawString(0, 40, rxpacket);
+    display.display();
+    cnt = 1;
+  }
+  
+  // display.drawString(4, 50, payload);
+  // --------------------------------------------
+  // delay(1000);
+  // lora_idle = true;
+  // display.display();
+  // memcpy(rxpacket, payload, size);
+  // rxpacket[size] = '\0';
+  // Radio.Sleep();
+  // display.drawString(0, 40, rxpacket);
+  //------------------------------------
+  
+  // display.display();
+  
+  // delay(1000);
+  lora_idle = true;
+  // display.clear();
   
 }
